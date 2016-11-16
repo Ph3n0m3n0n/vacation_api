@@ -37,10 +37,26 @@
         border: 1px solid #999;
         border-radius: 3px;
         height: 120px;
+        width: 500px;
         padding: 10px 10px 30px 10px;
         text-align: left;
+        right: 0;
+        left: 300px;
+      }
+      #info-window {
+      	background: #111214;
+      	height: 50px;
+      	width: 200px;
+      	color: #07f417;
+      	text-align: center;
+      	padding: 20px;
+      	font-family: "Lucida Console", Monaco, monospace;
+      }
+      #info-icon {
+
       }
     </style>
+    <title>Ph3n0m3n0n</title>
 
     <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -50,11 +66,12 @@
 
     <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 
+
   </head>
-  <body>
+  <body style="background-color: #1f211f;">
     <div class="container">
       <div class="options-box">
-        <h1>Vacation Destinations</h1>
+        <h1>Expect Us</h1>
         <div>
           <button id="show-destinations" type="button" class="btn btn-primary">Show destinations</button>
           <button id="hide-destinations" type="button" class="btn btn-primary">Hide destinations</button>
@@ -70,14 +87,14 @@
       function initMap() {
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.7413549, lng: -73.9980244},
+          center: {lat: 26.203407, lng: -98.230012},
           zoom: 3,
           mapTypeControl: false
         });
+
         // These are the real estate listings that will be shown to the user.
-        // Normally we'd have these in a database instead.
         var locations = [
-          {title: 'Ocho Rios, Jamaica', location: {lat: 18.407389, lng: -77.103135}},
+          {title: 'Ocho Rios, Jamaica', icon: 'http://www.stsvacations.com/images/headers/destinations/jamaica_ochorios_2_withflag.jpg', location: {lat: 18.407389, lng: -77.103135}},
           {title: 'Baghdad, Iraq', location: {lat: 33.312806, lng: 44.361488}},
           {title: 'Camp Buehring, Kuwait', location: {lat: 28.868606, lng: 48.163191}},
           {title: 'Cozumel, Mexico', location: {lat: 20.507170, lng: -86.944624}},
@@ -85,7 +102,10 @@
           {title: 'Berlin, Germany', location: {lat: 52.520007, lng: 13.404954}},
           {title: 'Las Vegas, Nevada', location: {lat: 36.169941, lng: -115.139830}}
         ];
-        var largeInfowindow = new google.maps.InfoWindow({map: map});
+
+        var largeInfowindow = new google.maps.InfoWindow({
+        	map: map,
+        });
 
         // The following group uses the location array to create an array of markers on initialize.
         for (var i = 0; i < locations.length; i++) {
@@ -97,6 +117,7 @@
             position: position,
             title: title,
             animation: google.maps.Animation.DROP,
+            icon: 'https://www.adiumxtras.com/images/thumbs/anonymous_1_39536_8261_thumb.png',
             id: i
           });
           // Push the marker to our array of markers.
@@ -109,14 +130,13 @@
         document.getElementById('show-destinations').addEventListener('click', showDestinations);
         document.getElementById('hide-destinations').addEventListener('click', hideDestinations);
       }
-      // This function populates the infowindow when the marker is clicked. We'll only allow
-      // one infowindow which will open at the marker that is clicked, and populate based
-      // on that markers position.
+      // This function populates the infowindow when the marker is clicked.
+
       function populateInfoWindow(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.setContent('<div id="info-window">' + marker.title + '</div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
